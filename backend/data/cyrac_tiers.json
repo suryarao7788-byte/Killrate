@@ -1,0 +1,238 @@
+{
+  "source": "CYRAC (Can You Roll A Crit?)",
+  "url": "https://canyourollacrit.com/2026/02/11/kill-team-tier-list-q1-2026/",
+  "scraped_at": "2026-02-27T11:58:26.621584+00:00",
+  "total_teams": 46,
+  "teams": {
+    "Fellgor Ravager": {
+      "tier": "S",
+      "tier_value": 5,
+      "global_rank": 1
+    },
+    "Canoptek Circle": {
+      "tier": "S",
+      "tier_value": 5,
+      "global_rank": 2
+    },
+    "Wolf Scouts": {
+      "tier": "S",
+      "tier_value": 5,
+      "global_rank": 3
+    },
+    "Murderwing": {
+      "tier": "S",
+      "tier_value": 5,
+      "global_rank": 4
+    },
+    "Corsair Voidscarred": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 5
+    },
+    "Void-Dancer Troupe": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 6
+    },
+    "Phobos Strike Team": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 7
+    },
+    "Kasrkin": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 8
+    },
+    "Inquisitorial Agent": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 9
+    },
+    "Chaos Cult": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 10
+    },
+    "Blades of Khaine": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 11
+    },
+    "Mandrakes": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 12
+    },
+    "Nemesis Claw": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 13
+    },
+    "Tempestus Aquilons": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 14
+    },
+    "Wrecka Krew": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 15
+    },
+    "Raveners": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 16
+    },
+    "Celestian Insidiants": {
+      "tier": "A",
+      "tier_value": 4,
+      "global_rank": 17
+    },
+    "Kommandos": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 18
+    },
+    "Wyrmblade": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 19
+    },
+    "Hunter Clade": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 20
+    },
+    "Legionary": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 21
+    },
+    "Blooded": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 22
+    },
+    "Elucidian Starstriders": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 23
+    },
+    "Imperial Navy Breachers": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 24
+    },
+    "Farstalker Kinband": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 25
+    },
+    "Hierotek Circle": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 26
+    },
+    "Exaction Squad": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 27
+    },
+    "Hand of the Archon": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 28
+    },
+    "Hearthkyn Salvagers": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 29
+    },
+    "Brood Brothers": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 30
+    },
+    "Hernkyn Yaegirs": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 31
+    },
+    "Angels of Death": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 32
+    },
+    "Plague Marines": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 33
+    },
+    "Vespid Stingwings": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 34
+    },
+    "Ratlings": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 35
+    },
+    "Goremongers": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 36
+    },
+    "Sanctifiers": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 37
+    },
+    "Deathwatch": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 38
+    },
+    "XV26 Stealth Battlesuits": {
+      "tier": "B",
+      "tier_value": 3,
+      "global_rank": 39
+    },
+    "Death Korps": {
+      "tier": "C",
+      "tier_value": 2,
+      "global_rank": 40
+    },
+    "Pathfinders": {
+      "tier": "C",
+      "tier_value": 2,
+      "global_rank": 41
+    },
+    "Novitiates": {
+      "tier": "C",
+      "tier_value": 2,
+      "global_rank": 42
+    },
+    "Warp Coven": {
+      "tier": "C",
+      "tier_value": 2,
+      "global_rank": 43
+    },
+    "Battleclade": {
+      "tier": "C",
+      "tier_value": 2,
+      "global_rank": 44
+    },
+    "Gellerpox Infected": {
+      "tier": "D",
+      "tier_value": 1,
+      "global_rank": 45
+    },
+    "Scout Squad": {
+      "tier": "D",
+      "tier_value": 1,
+      "global_rank": 46
+    }
+  }
+}
