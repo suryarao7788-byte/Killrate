@@ -7,6 +7,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from typing import Optional
 import json, os, jwt, datetime
+import importlib
 
 from api import fetch_all_killteams
 from database import (
@@ -18,20 +19,17 @@ from database import (
 )
 from elo import faction_baseline, is_provisional, PROVISIONAL_GAMES
 from team_meta import (
-    CYRAC_RANK, get_cyrac_tier, get_meta, TEAM_META
+    CYRAC_RANK, get_cyrac_tier, get_meta, TEAM_META,
+    _resolve_cyrac, get_ppo_entry,
 )
 
 app = FastAPI(title="Dataslate API")
 
-_frontend_url = os.getenv("FRONTEND_URL", "")
-_allowed_origins = ["http://localhost:5173", "http://localhost:3000"]
-if _frontend_url:
-    _allowed_origins.append(_frontend_url)
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_allowed_origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_origin_regex=r"https://.*\.trycloudflare\.com",
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -40,6 +38,34 @@ SECRET_KEY = os.getenv("SECRET_KEY", "kt-selector-dev-secret")
 security   = HTTPBearer(auto_error=False)
 
 init_db()
+
+# ── Startup: fetch fresh data ──────────────────────────────────────────────────
+print("Starting up Dataslate...")
+try:
+    import scrape_cyrac
+    _cyrac_data = scrape_cyrac.refresh()
+    if _cyrac_data:
+        import team_meta as tm
+        tm.CYRAC_RANK     = {n: d["global_rank"] for n, d in _cyrac_data["teams"].items()}
+        tm.CYRAC_TIER_MAP = {n: d["tier"]        for n, d in _cyrac_data["teams"].items()}
+        tm.CYRAC_TOTAL    = len(tm.CYRAC_RANK)
+        tm.CYRAC_SCRAPED_AT = _cyrac_data.get("scraped_at")
+except Exception as e:
+    print(f"  [CYRAC] Startup error: {e}")
+
+try:
+    import scrape_ppo
+    _ppo_data = scrape_ppo.refresh()
+    if _ppo_data:
+        import team_meta as tm
+        tm.PPO_DATA       = _ppo_data
+        tm.PPO_TEAMS      = _ppo_data.get("teams", {})
+        tm.PPO_QUARTER    = _ppo_data.get("quarter", "")
+        tm.PPO_SCRAPED_AT = _ppo_data.get("scraped_at")
+except Exception as e:
+    print(f"  [PPO] Startup error: {e}")
+
+print("Startup complete.")
 
 
 # ── Auth helpers ──────────────────────────────────────────────────────────────
@@ -148,7 +174,7 @@ def api_killteams():
         result.append({
             "name":       name,
             "faction":    kt.get("factionName", ""),
-            "cyrac_rank": CYRAC_RANK.get(name),
+            "cyrac_rank": CYRAC_RANK.get(_resolve_cyrac(name)),
             "cyrac_tier": get_cyrac_tier(name),
             "size":       meta.get("size"),
             "play":       meta.get("play"),
@@ -218,7 +244,7 @@ def api_meta():
         games   = (faction["wins"] + faction["draws"] + faction["losses"]) if faction else 0
         result.append({
             "name":            name,
-            "cyrac_rank":      CYRAC_RANK.get(name),
+            "cyrac_rank":      CYRAC_RANK.get(_resolve_cyrac(name)),
             "cyrac_tier":      get_cyrac_tier(name),
             "community_score": votes["avg_score"],
             "vote_count":      votes["vote_count"],
@@ -228,6 +254,18 @@ def api_meta():
             "faction_elo":     faction["elo"] if faction else faction_baseline(name),
             "faction_games":   games,
             "faction_elo_provisional": games < 10,
+            **({
+                "ppo_rank":         e["rank"],
+                "ppo_winrate":      e["win_rate"],
+                "ppo_placing_rate": e.get("placing_rate"),
+                "ppo_picks":        e.get("picks"),
+                "ppo_games":        e.get("games"),
+                "ppo_tier":         e.get("ppo_tier"),
+                "ppo_tier_est":     e.get("tier_est"),
+            } if (e := tm.get_ppo_entry(name)) else {
+                "ppo_rank": None, "ppo_winrate": None, "ppo_placing_rate": None,
+                "ppo_picks": None, "ppo_games": None, "ppo_tier": None, "ppo_tier_est": None,
+            }),
         })
     return sorted(result, key=lambda x: x["cyrac_rank"] or 999)
 
@@ -318,6 +356,17 @@ def api_faction_leaderboard():
             ORDER BY elo DESC
         """).fetchall()
     return [dict(r) for r in rows]
+
+
+@app.get("/api/meta/ppo-info")
+def ppo_info():
+    return {
+        "using_live_data": bool(tm.PPO_DATA),
+        "quarter":         tm.PPO_QUARTER,
+        "scraped_at":      tm.PPO_SCRAPED_AT,
+        "total_teams":     len(tm.PPO_TEAMS),
+        "source":          "Pretentious Plastic Ops (BCP tournament data)",
+    }
 
 
 @app.get("/api/meta/cyrac-info")

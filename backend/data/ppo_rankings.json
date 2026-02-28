@@ -1,0 +1,423 @@
+{
+  "source": "Pretentious Plastic Ops (BCP tournament data)",
+  "url": "https://www.pretentiousplasticops.com/api/stats/rankings",
+  "quarter": "Q1 2026",
+  "scraped_at": "2026-02-28T04:08:18.030539+00:00",
+  "total_teams": 46,
+  "teams": {
+    "Wolf Scouts": {
+      "rank": 1,
+      "win_rate": 56.5,
+      "placing_rate": 22.0,
+      "picks": 152,
+      "games": 524,
+      "tier_est": 0.4307,
+      "ppo_tier": "A"
+    },
+    "Murderwing": {
+      "rank": 2,
+      "win_rate": 60.8,
+      "placing_rate": 18.6,
+      "picks": 72,
+      "games": 231,
+      "tier_est": 0.4286,
+      "ppo_tier": "A"
+    },
+    "Wreckas": {
+      "rank": 3,
+      "win_rate": 57.0,
+      "placing_rate": 15.8,
+      "picks": 130,
+      "games": 436,
+      "tier_est": 0.4136,
+      "ppo_tier": "A"
+    },
+    "Mandrakes": {
+      "rank": 4,
+      "win_rate": 56.3,
+      "placing_rate": 20.0,
+      "picks": 55,
+      "games": 190,
+      "tier_est": 0.4008,
+      "ppo_tier": "A"
+    },
+    "Breachers": {
+      "rank": 5,
+      "win_rate": 60.6,
+      "placing_rate": 24.5,
+      "picks": 25,
+      "games": 80,
+      "tier_est": 0.396,
+      "ppo_tier": "A"
+    },
+    "Inquisition": {
+      "rank": 6,
+      "win_rate": 60.8,
+      "placing_rate": 22.2,
+      "picks": 22,
+      "games": 79,
+      "tier_est": 0.3907,
+      "ppo_tier": "B"
+    },
+    "Chaos Cult": {
+      "rank": 7,
+      "win_rate": 54.3,
+      "placing_rate": 24.0,
+      "picks": 26,
+      "games": 104,
+      "tier_est": 0.3758,
+      "ppo_tier": "B"
+    },
+    "Kasrkin": {
+      "rank": 8,
+      "win_rate": 53.6,
+      "placing_rate": 19.6,
+      "picks": 39,
+      "games": 126,
+      "tier_est": 0.3743,
+      "ppo_tier": "B"
+    },
+    "Farstalkers": {
+      "rank": 9,
+      "win_rate": 52.2,
+      "placing_rate": 21.7,
+      "picks": 42,
+      "games": 134,
+      "tier_est": 0.3741,
+      "ppo_tier": "B"
+    },
+    "Hunter Clade": {
+      "rank": 10,
+      "win_rate": 68.5,
+      "placing_rate": 46.4,
+      "picks": 7,
+      "games": 27,
+      "tier_est": 0.3739,
+      "ppo_tier": "B"
+    },
+    "Starstriders": {
+      "rank": 11,
+      "win_rate": 58.6,
+      "placing_rate": 23.3,
+      "picks": 15,
+      "games": 58,
+      "tier_est": 0.3685,
+      "ppo_tier": "B"
+    },
+    "Aquilons": {
+      "rank": 12,
+      "win_rate": 50.8,
+      "placing_rate": 16.5,
+      "picks": 56,
+      "games": 196,
+      "tier_est": 0.3645,
+      "ppo_tier": "B"
+    },
+    "Angels of Death": {
+      "rank": 13,
+      "win_rate": 49.9,
+      "placing_rate": 11.1,
+      "picks": 129,
+      "games": 433,
+      "tier_est": 0.3582,
+      "ppo_tier": "C"
+    },
+    "Ratlings": {
+      "rank": 14,
+      "win_rate": 53.3,
+      "placing_rate": 13.3,
+      "picks": 32,
+      "games": 107,
+      "tier_est": 0.3565,
+      "ppo_tier": "C"
+    },
+    "Corsairs": {
+      "rank": 15,
+      "win_rate": 61.5,
+      "placing_rate": 12.5,
+      "picks": 12,
+      "games": 39,
+      "tier_est": 0.3514,
+      "ppo_tier": "C"
+    },
+    "Brood Brothers": {
+      "rank": 16,
+      "win_rate": 51.4,
+      "placing_rate": 16.1,
+      "picks": 28,
+      "games": 104,
+      "tier_est": 0.3512,
+      "ppo_tier": "C"
+    },
+    "Goremongers": {
+      "rank": 17,
+      "win_rate": 49.3,
+      "placing_rate": 14.6,
+      "picks": 42,
+      "games": 137,
+      "tier_est": 0.3461,
+      "ppo_tier": "C"
+    },
+    "Nemesis": {
+      "rank": 18,
+      "win_rate": 48.8,
+      "placing_rate": 9.0,
+      "picks": 104,
+      "games": 339,
+      "tier_est": 0.3443,
+      "ppo_tier": "C"
+    },
+    "Fellgor": {
+      "rank": 19,
+      "win_rate": 49.5,
+      "placing_rate": 14.0,
+      "picks": 33,
+      "games": 111,
+      "tier_est": 0.3416,
+      "ppo_tier": "C"
+    },
+    "Raveners": {
+      "rank": 20,
+      "win_rate": 48.4,
+      "placing_rate": 8.8,
+      "picks": 81,
+      "games": 278,
+      "tier_est": 0.3392,
+      "ppo_tier": "C"
+    },
+    "Vespid": {
+      "rank": 21,
+      "win_rate": 50.7,
+      "placing_rate": 6.6,
+      "picks": 38,
+      "games": 142,
+      "tier_est": 0.3378,
+      "ppo_tier": "C"
+    },
+    "Canoptek": {
+      "rank": 22,
+      "win_rate": 46.3,
+      "placing_rate": 13.3,
+      "picks": 66,
+      "games": 231,
+      "tier_est": 0.336,
+      "ppo_tier": "C"
+    },
+    "Hand of the Archon": {
+      "rank": 23,
+      "win_rate": 50.0,
+      "placing_rate": 4.9,
+      "picks": 36,
+      "games": 123,
+      "tier_est": 0.3292,
+      "ppo_tier": "C"
+    },
+    "Deathwatch": {
+      "rank": 24,
+      "win_rate": 44.9,
+      "placing_rate": 9.2,
+      "picks": 101,
+      "games": 314,
+      "tier_est": 0.3216,
+      "ppo_tier": "D"
+    },
+    "Celestians": {
+      "rank": 25,
+      "win_rate": 46.0,
+      "placing_rate": 6.0,
+      "picks": 54,
+      "games": 186,
+      "tier_est": 0.3159,
+      "ppo_tier": "D"
+    },
+    "XV26 Stealth Suits": {
+      "rank": 26,
+      "win_rate": 44.7,
+      "placing_rate": 7.1,
+      "picks": 77,
+      "games": 245,
+      "tier_est": 0.3137,
+      "ppo_tier": "D"
+    },
+    "Gellerpox": {
+      "rank": 27,
+      "win_rate": 100.0,
+      "placing_rate": 100.0,
+      "picks": 1,
+      "games": 3,
+      "tier_est": 0.3135,
+      "ppo_tier": "D"
+    },
+    "Legionary": {
+      "rank": 28,
+      "win_rate": 50.0,
+      "placing_rate": 10.4,
+      "picks": 12,
+      "games": 34,
+      "tier_est": 0.3135,
+      "ppo_tier": "D"
+    },
+    "Blades of Khaine": {
+      "rank": 29,
+      "win_rate": 43.1,
+      "placing_rate": 10.8,
+      "picks": 37,
+      "games": 137,
+      "tier_est": 0.3078,
+      "ppo_tier": "D"
+    },
+    "Sanctifiers": {
+      "rank": 30,
+      "win_rate": 50.0,
+      "placing_rate": 0.0,
+      "picks": 14,
+      "games": 45,
+      "tier_est": 0.3077,
+      "ppo_tier": "D"
+    },
+    "Yaegir": {
+      "rank": 31,
+      "win_rate": 45.7,
+      "placing_rate": 5.6,
+      "picks": 27,
+      "games": 93,
+      "tier_est": 0.3075,
+      "ppo_tier": "D"
+    },
+    "Phobos": {
+      "rank": 32,
+      "win_rate": 55.3,
+      "placing_rate": 0.0,
+      "picks": 6,
+      "games": 19,
+      "tier_est": 0.3063,
+      "ppo_tier": "D"
+    },
+    "Pathfinders": {
+      "rank": 33,
+      "win_rate": 50.0,
+      "placing_rate": 25.0,
+      "picks": 4,
+      "games": 14,
+      "tier_est": 0.3033,
+      "ppo_tier": "D"
+    },
+    "Plague Marines": {
+      "rank": 34,
+      "win_rate": 43.0,
+      "placing_rate": 5.5,
+      "picks": 71,
+      "games": 241,
+      "tier_est": 0.2998,
+      "ppo_tier": "D"
+    },
+    "Death Korps": {
+      "rank": 35,
+      "win_rate": 50.0,
+      "placing_rate": 0.0,
+      "picks": 6,
+      "games": 20,
+      "tier_est": 0.2973,
+      "ppo_tier": "D"
+    },
+    "Scouts": {
+      "rank": 36,
+      "win_rate": 43.6,
+      "placing_rate": 0.0,
+      "picks": 22,
+      "games": 78,
+      "tier_est": 0.2893,
+      "ppo_tier": "D"
+    },
+    "Void-dancers": {
+      "rank": 37,
+      "win_rate": 43.2,
+      "placing_rate": 0.0,
+      "picks": 6,
+      "games": 22,
+      "tier_est": 0.2847,
+      "ppo_tier": "E"
+    },
+    "Blooded": {
+      "rank": 38,
+      "win_rate": 36.1,
+      "placing_rate": 16.7,
+      "picks": 6,
+      "games": 18,
+      "tier_est": 0.2806,
+      "ppo_tier": "E"
+    },
+    "Exaction": {
+      "rank": 39,
+      "win_rate": 40.7,
+      "placing_rate": 1.8,
+      "picks": 27,
+      "games": 91,
+      "tier_est": 0.2797,
+      "ppo_tier": "E"
+    },
+    "Kommandos": {
+      "rank": 40,
+      "win_rate": 38.3,
+      "placing_rate": 3.1,
+      "picks": 16,
+      "games": 47,
+      "tier_est": 0.2738,
+      "ppo_tier": "E"
+    },
+    "Hierotek": {
+      "rank": 41,
+      "win_rate": 38.3,
+      "placing_rate": 4.2,
+      "picks": 24,
+      "games": 90,
+      "tier_est": 0.2734,
+      "ppo_tier": "E"
+    },
+    "Novitiates": {
+      "rank": 42,
+      "win_rate": 33.3,
+      "placing_rate": 0.0,
+      "picks": 6,
+      "games": 18,
+      "tier_est": 0.2665,
+      "ppo_tier": "E"
+    },
+    "Wyrmblade": {
+      "rank": 43,
+      "win_rate": 0.0,
+      "placing_rate": 0.0,
+      "picks": 2,
+      "games": 4,
+      "tier_est": 0.2599,
+      "ppo_tier": "E"
+    },
+    "Salvagers": {
+      "rank": 44,
+      "win_rate": 33.0,
+      "placing_rate": 5.9,
+      "picks": 17,
+      "games": 56,
+      "tier_est": 0.2581,
+      "ppo_tier": "E"
+    },
+    "Warpcoven": {
+      "rank": 45,
+      "win_rate": 23.5,
+      "placing_rate": 0.0,
+      "picks": 6,
+      "games": 17,
+      "tier_est": 0.2504,
+      "ppo_tier": "E"
+    },
+    "Battleclade": {
+      "rank": 46,
+      "win_rate": 33.3,
+      "placing_rate": 0.0,
+      "picks": 29,
+      "games": 99,
+      "tier_est": 0.2442,
+      "ppo_tier": "E"
+    }
+  }
+}

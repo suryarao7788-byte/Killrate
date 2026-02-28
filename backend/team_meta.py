@@ -147,8 +147,17 @@ TRICKSY_ICONS = {
 }
 
 
+def _resolve_cyrac(team_name: str) -> str:
+    """Resolve any name variant to the key used in CYRAC_RANK."""
+    canon = _canonical(team_name)
+    if canon in CYRAC_RANK:
+        return canon
+    lower = {k.lower(): k for k in CYRAC_RANK}
+    return lower.get(canon.lower(), canon)
+
+
 def get_cyrac_rank(team_name: str) -> int | None:
-    return CYRAC_RANK.get(team_name)
+    return CYRAC_RANK.get(_resolve_cyrac(team_name))
 
 
 
@@ -180,7 +189,7 @@ def meta_badges_html(team_name: str) -> str:
 
 
 def cyrac_badge_html(team_name: str) -> str:
-    rank  = CYRAC_RANK.get(team_name)
+    rank  = CYRAC_RANK.get(_resolve_cyrac(team_name))
     tier  = get_cyrac_tier(team_name)
     if rank is None:
         return ""
@@ -228,7 +237,7 @@ def get_cyrac_tier(team_name: str) -> str:
     if CYRAC_TIER_MAP and team_name in CYRAC_TIER_MAP:
         return CYRAC_TIER_MAP[team_name]
     # Fall back to rank-based calculation
-    rank = CYRAC_RANK.get(team_name)
+    rank = CYRAC_RANK.get(_resolve_cyrac(team_name))
     if rank is None:
         return "Unranked"
     pct = rank / CYRAC_TOTAL
@@ -237,3 +246,97 @@ def get_cyrac_tier(team_name: str) -> str:
     if pct <= 0.50: return "B"
     if pct <= 0.75: return "C"
     return "D"
+
+
+# ── PPO tournament data ────────────────────────────────────────────────────────
+
+def _load_ppo() -> dict | None:
+    path = _os.path.join(_os.path.dirname(__file__), "data", "ppo_rankings.json")
+    if _os.path.exists(path):
+        with open(path) as f:
+            return _json.load(f)
+    return None
+
+_ppo = _load_ppo()
+
+PPO_DATA      = _ppo
+PPO_TEAMS     = _ppo.get("teams", {}) if _ppo else {}
+PPO_QUARTER   = _ppo.get("quarter", "") if _ppo else ""
+PPO_SCRAPED_AT = _ppo.get("scraped_at") if _ppo else None
+
+
+
+# ── Name normalisation ────────────────────────────────────────────────────────
+# Maps PPO short names → canonical CYRAC/KTDash full names
+
+# Maps any variant name → canonical CYRAC name
+# Covers: KTDash title-case, PPO short names, plurals, etc.
+NAME_MAP = {
+    # KTDash title-case variants
+    "Angels Of Death":       "Angels of Death",
+    "Blades Of Khaine":      "Blades of Khaine",
+    "Fellgor Ravagers":      "Fellgor Ravager",
+    "Hand Of The Archon":    "Hand of the Archon",
+    "Inquisitorial Agents":  "Inquisitorial Agent",
+    "Legionaries":           "Legionary",
+    "Tempestus Aquilon":     "Tempestus Aquilons",
+    # PPO short names
+    "Aquilons":              "Tempestus Aquilons",
+    "Breachers":             "Imperial Navy Breachers",
+    "Canoptek":              "Canoptek Circle",
+    "Celestians":            "Celestian Insidiants",
+    "Corsairs":              "Corsair Voidscarred",
+    "Exaction":              "Exaction Squad",
+    "Farstalkers":           "Farstalker Kinband",
+    "Fellgor":               "Fellgor Ravager",
+    "Gellerpox":             "Gellerpox Infected",
+    "Hierotek":              "Hierotek Circle",
+    "Inquisition":           "Inquisitorial Agent",
+    "Nemesis":               "Nemesis Claw",
+    "Phobos":                "Phobos Strike Team",
+    "Salvagers":             "Hearthkyn Salvagers",
+    "Scouts":                "Scout Squad",
+    "Starstriders":          "Elucidian Starstriders",
+    "Vespid":                "Vespid Stingwings",
+    "Void-dancers":          "Void-Dancer Troupe",
+    "Warpcoven":             "Warp Coven",
+    "Wreckas":               "Wrecka Krew",
+    "XV26 Stealth Suits":    "XV26 Stealth Battlesuits",
+    "Yaegir":                "Hernkyn Yaegirs",
+}
+
+# Ignored entries — not real kill teams
+_IGNORED = {"Non-Player Operatives", "Strike Force Variel", "Titus Mission Pack"}
+
+
+def _canonical(team_name: str) -> str:
+    """Resolve any name variant to the canonical CYRAC name."""
+    if team_name in _IGNORED:
+        return team_name
+    return NAME_MAP.get(team_name, team_name)
+
+
+def _resolve_ppo(team_name: str) -> str:
+    """Given any team name, return the PPO dict key."""
+    canon = _canonical(team_name)
+    if canon in PPO_TEAMS:
+        return canon
+    # Build reverse map: canonical → PPO key
+    reverse = {_canonical(k): k for k in PPO_TEAMS}
+    return reverse.get(canon, canon)
+
+def get_ppo_rank(team_name: str) -> int | None:
+    key = _resolve_ppo(team_name)
+    entry = PPO_TEAMS.get(key)
+    return entry["rank"] if entry else None
+
+
+def get_ppo_winrate(team_name: str) -> float | None:
+    key = _resolve_ppo(team_name)
+    entry = PPO_TEAMS.get(key)
+    return entry["win_rate"] if entry else None
+
+
+def get_ppo_entry(team_name: str) -> dict | None:
+    key = _resolve_ppo(team_name)
+    return PPO_TEAMS.get(key)

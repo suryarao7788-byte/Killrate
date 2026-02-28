@@ -101,11 +101,11 @@ def build_output(teams: dict[str, str], url: str) -> dict:
 
 
 def scrape(url: str = TIER_LIST_URL) -> dict:
-    print(f"Fetching: {url}")
+    print(f"  [CYRAC] Fetching tier list...")
     html  = fetch_html(url)
-    print(f"  HTML fetched ({len(html):,} bytes)")
+    print(f"  [CYRAC] HTML fetched ({len(html):,} bytes)")
     teams = parse_tiers(html)
-    print(f"  Parsed {len(teams)} teams")
+    print(f"  [CYRAC] Parsed {len(teams)} teams")
     if len(teams) < 10:
         print("  WARNING: low count. Found:", list(teams.keys()))
     return build_output(teams, url)
@@ -115,7 +115,7 @@ def save(data: dict):
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, "w") as f:
         json.dump(data, f, indent=2)
-    print(f"  Saved to {OUTPUT_FILE}")
+    print(f"  [CYRAC] Saved to {OUTPUT_FILE}")
 
 
 def load() -> dict | None:
@@ -150,6 +150,18 @@ def get_rank(team_name: str, data: dict | None = None) -> int | None:
     return entry["global_rank"] if entry else None
 
 
+
+
+def refresh():
+    """Fetch fresh data and save. Called on startup."""
+    try:
+        data = scrape()
+        save(data)
+        return data
+    except Exception as e:
+        print(f"  [CYRAC] WARNING: Could not fetch tier list: {e}")
+        print(f"  [CYRAC] Using cached data if available.")
+        return load()
 if __name__ == "__main__":
     data = scrape()
     print("\nResults by tier:")

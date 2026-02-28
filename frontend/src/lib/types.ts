@@ -12,6 +12,13 @@ export interface MetaEntry extends KillTeam {
   faction_elo: number
   faction_games: number
   faction_elo_provisional: boolean
+  ppo_rank?: number
+  ppo_winrate?: number
+  ppo_placing_rate?: number
+  ppo_picks?: number
+  ppo_games?: number
+  ppo_tier?: string
+  ppo_tier_est?: number
   community_score: number | null
   vote_count: number
 }

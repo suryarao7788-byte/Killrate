@@ -23,7 +23,7 @@ function Badge({ label, color }: { label: string; color: string }) {
   )
 }
 
-type SortKey = 'cyrac_rank' | 'community_score' | 'name'
+type SortKey = 'cyrac_rank' | 'ppo_rank' | 'community_score' | 'name'
 
 export default function Meta() {
   const [data, setData]         = useState<MetaEntry[]>([])
@@ -45,6 +45,7 @@ export default function Meta() {
     d.sort((a, b) => {
       if (sortBy === 'cyrac_rank')      return (a.cyrac_rank ?? 999) - (b.cyrac_rank ?? 999)
       if (sortBy === 'community_score') return (b.community_score ?? 0) - (a.community_score ?? 0)
+      if (sortBy === 'ppo_rank')        return (a.ppo_rank ?? 999) - (b.ppo_rank ?? 999)
       return a.name.localeCompare(b.name)
     })
     return d
@@ -70,6 +71,7 @@ export default function Meta() {
         <select value={sortBy} onChange={e => setSortBy(e.target.value as SortKey)} style={inputStyle}>
           <option value="cyrac_rank">Sort: CYRAC Rank</option>
           <option value="community_score">Sort: Community Score</option>
+          <option value="ppo_rank">Sort: PPO Tier</option>
           <option value="name">Sort: Name</option>
         </select>
         <MultiFilter label="Size" options={['Horde','Midrange','Elite','Hyper-elite','Mixed']} value={filterSize} onChange={setFilterSize} />
@@ -81,7 +83,7 @@ export default function Meta() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #2d3748', color: '#64748b' }}>
-              {['#','Kill Team','CYRAC','Faction ELO','Community','Votes','Size','Play Style','Tricksy'].map(h => (
+              {['#','Kill Team','CYRAC','PPO Tier','PPO Win%','PPO Placing%','PPO Games','Faction ELO','Community','Votes','Size','Play Style','Tricksy'].map(h => (
                 <th key={h} style={{ padding: '8px 12px', textAlign: 'left', fontWeight: 600 }}>{h}</th>
               ))}
             </tr>
@@ -98,6 +100,26 @@ export default function Meta() {
                   {row.cyrac_rank ? (
                     <Badge label={`#${row.cyrac_rank} ${row.cyrac_tier}`} color={TIER_COLORS[row.cyrac_tier] ?? '#888'} />
                   ) : '—'}
+                </td>
+                <td style={{ padding: '10px 12px', textAlign: 'center' }}>
+                  {row.ppo_tier ? (
+                    <Badge label={`#${row.ppo_rank} ${row.ppo_tier}`} color={TIER_COLORS[row.ppo_tier] ?? '#888'} />
+                  ) : <span style={{ color: '#666' }}>—</span>}
+                </td>
+                <td style={{ padding: '10px 12px', textAlign: 'center' }}>
+                  {row.ppo_winrate != null ? (
+                    <span style={{ fontWeight: 700, color: row.ppo_winrate >= 55 ? '#4ade80' : row.ppo_winrate >= 45 ? '#facc15' : '#f87171' }}>
+                      {row.ppo_winrate}%
+                    </span>
+                  ) : <span style={{ color: '#666' }}>—</span>}
+                </td>
+                <td style={{ padding: '10px 12px', textAlign: 'center' }}>
+                  {row.ppo_placing_rate != null ? (
+                    <span style={{ fontWeight: 600, color: '#94a3b8' }}>{row.ppo_placing_rate}%</span>
+                  ) : <span style={{ color: '#666' }}>—</span>}
+                </td>
+                <td style={{ padding: '10px 12px', textAlign: 'center', color: '#64748b', fontSize: 12 }}>
+                  {row.ppo_games != null && row.ppo_picks != null ? `${row.ppo_picks}p / ${row.ppo_games}g` : '—'}
                 </td>
                 <td style={{ padding: '10px 12px' }}>
                   <span style={{ fontWeight: 700, color: '#f59e0b' }}>
