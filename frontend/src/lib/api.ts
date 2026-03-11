@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import type { KillTeam, MetaEntry, VoteSummary, CommunityNote, Match, User, MatchBody, TeamStat } from './types'
 
 const BASE = (import.meta.env.VITE_API_URL ?? '') + '/api'

@@ -18,7 +18,7 @@ export default function Nav() {
       position: 'sticky', top: 0, zIndex: 100,
     }}>
       <span style={{ fontWeight: 800, fontSize: 18, color: '#3b82f6', marginRight: 16, padding: '14px 0' }}>
-        Dataslate
+        Killrate
       </span>
       {links.map(({ to, label, icon: Icon }) => (
         <NavLink key={to} to={to} end={to === '/'} style={({ isActive }) => ({
@@ -34,7 +34,7 @@ export default function Nav() {
       ))}
       {user && (
         <span style={{ marginLeft: 'auto', fontSize: 13, color: '#64748b' }}>
-          {user.username} · {user.elo.toFixed(0)} ELO
+          {user.username} · {user.player_elo.toFixed(0)} ELO
         </span>
       )}
     </nav>

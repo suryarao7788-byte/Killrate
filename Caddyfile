@@ -1,0 +1,11 @@
+killrate.info, www.killrate.info {
+    handle /api/* {
+        reverse_proxy localhost:8000
+    }
+
+    handle {
+        root * /opt/killrate/frontend/dist
+        try_files {path} /index.html
+        file_server
+    }
+}

@@ -1,0 +1,15 @@
+[Unit]
+Description=Killrate FastAPI Backend
+After=network.target
+
+[Service]
+Type=simple
+User=DEPLOY_USER
+WorkingDirectory=/opt/killrate/backend
+EnvironmentFile=/opt/killrate/.env
+ExecStart=/usr/bin/python3 -m uvicorn main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

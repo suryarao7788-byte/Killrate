@@ -153,7 +153,7 @@ export default function MyRecord() {
                   <div key={key}>
                     <Label>{label}</Label>
                     <NumInput
-                      value={(form as Record<string, number | undefined>)[key] ?? 0}
+                      value={(form as unknown as Record<string, number | undefined>)[key] ?? 0}
                       onChange={v => setForm(f => ({ ...f, [key]: v }))}
                     />
                   </div>

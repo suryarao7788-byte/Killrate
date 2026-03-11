@@ -1,12 +1,12 @@
 """
-main.py — FastAPI backend for KT Selector
+main.py — FastAPI backend for Killrate
 """
-from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi import FastAPI, HTTPException, Depends, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from typing import Optional
-import json, os, jwt, datetime
+import json, os, jwt, datetime, time, collections
 import importlib
 
 from api import fetch_all_killteams
@@ -23,7 +23,7 @@ from team_meta import (
     _resolve_cyrac, get_ppo_entry,
 )
 
-app = FastAPI(title="Dataslate API")
+app = FastAPI(title="Killrate API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -39,8 +39,21 @@ security   = HTTPBearer(auto_error=False)
 
 init_db()
 
+# ── Rate limiter (in-memory, per-IP) ─────────────────────────────────────────
+_rate_buckets: dict[str, collections.deque] = {}
+
+def _rate_limit(request: Request, max_calls: int = 5, window_secs: int = 60):
+    ip = request.client.host if request.client else "unknown"
+    now = time.monotonic()
+    bucket = _rate_buckets.setdefault(ip, collections.deque())
+    while bucket and bucket[0] < now - window_secs:
+        bucket.popleft()
+    if len(bucket) >= max_calls:
+        raise HTTPException(status_code=429, detail="Too many requests. Try again shortly.")
+    bucket.append(now)
+
 # ── Startup: fetch fresh data ──────────────────────────────────────────────────
-print("Starting up Dataslate...")
+print("Starting up Killrate...")
 try:
     import scrape_cyrac
     _cyrac_data = scrape_cyrac.refresh()
@@ -133,7 +146,8 @@ class NoteBody(BaseModel):
 # ── Auth routes ───────────────────────────────────────────────────────────────
 
 @app.post("/api/auth/register")
-def api_register(body: RegisterBody):
+def api_register(body: RegisterBody, request: Request):
+    _rate_limit(request, max_calls=3, window_secs=300)
     ok, msg = register(body.username, body.password)
     if not ok:
         raise HTTPException(status_code=400, detail=msg)
@@ -142,7 +156,8 @@ def api_register(body: RegisterBody):
 
 
 @app.post("/api/auth/login")
-def api_login(body: LoginBody):
+def api_login(body: LoginBody, request: Request):
+    _rate_limit(request, max_calls=10, window_secs=60)
     ok, user = login(body.username, body.password)
     if not ok:
         raise HTTPException(status_code=401, detail="Invalid credentials")

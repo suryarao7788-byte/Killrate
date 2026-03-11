@@ -18,7 +18,7 @@ export default function Account() {
         <div style={{ fontSize: 48, marginBottom: 12 }}>👤</div>
         <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>{user.username}</h2>
         <p style={{ color: '#64748b', fontSize: 13, marginBottom: 24 }}>
-          {user.wins}W · {user.draws}D · {user.losses}L · {user.elo.toFixed(0)} ELO
+          {user.wins}W · {user.draws}D · {user.losses}L · {user.player_elo.toFixed(0)} ELO
         </p>
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={() => { navigate('/record') }} style={{ ...btnStyle, flex: 1, background: '#3b82f6' }}>
@@ -50,7 +50,7 @@ export default function Account() {
   return (
     <div style={{ maxWidth: 400, margin: '80px auto', padding: '0 16px' }}>
       <div style={{ background: '#161b27', border: '1px solid #2d3748', borderRadius: 16, padding: 32 }}>
-        <h1 style={{ fontSize: 20, fontWeight: 700, marginBottom: 24, textAlign: 'center' }}>Dataslate</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 700, marginBottom: 24, textAlign: 'center' }}>Killrate</h1>
 
         <div style={{ display: 'flex', marginBottom: 24, borderBottom: '1px solid #2d3748' }}>
           {(['login', 'register'] as const).map(t => (

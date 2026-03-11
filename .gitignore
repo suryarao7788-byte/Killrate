@@ -1,0 +1,32 @@
+# Dependencies
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+
+# Python
+backend/__pycache__/
+*.pyc
+
+# Database (user data — never commit)
+backend/data/dataslate.db
+backend/data/dataslate.db-wal
+backend/data/dataslate.db-shm
+
+# Secrets
+.env
+
+# Backups
+backups/
+
+# Archives
+*.rar
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

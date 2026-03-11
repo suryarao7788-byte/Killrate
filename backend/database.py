@@ -17,8 +17,10 @@ def _conn():
         return psycopg2.connect(DATABASE_URL)
     import sqlite3
     os.makedirs(os.path.dirname(_DB_PATH), exist_ok=True)
-    con = sqlite3.connect(_DB_PATH, check_same_thread=False)
+    con = sqlite3.connect(_DB_PATH, check_same_thread=False, timeout=10)
     con.row_factory = sqlite3.Row
+    con.execute("PRAGMA journal_mode=WAL")
+    con.execute("PRAGMA busy_timeout=5000")
     return con
 
 def _p(): return "%s" if _PG else "?"
