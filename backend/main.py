@@ -24,12 +24,15 @@ from team_meta import (
 )
 
 app = FastAPI(title="Killrate API")
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_origin_regex=r"https://.*\.trycloudflare\.com",
-    allow_credentials=False,
+    allow_origins=[
+        "https://killrate.info",
+        "https://www.killrate.info",
+        "http://localhost:5173",
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
