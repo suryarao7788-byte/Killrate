@@ -59,12 +59,12 @@ const inputStyle: React.CSSProperties = {
   padding: '6px 12px', color: '#e2e8f0', fontSize: 13,
 }
 
-type SortKey = 'cyrac_rank' | 'ppo_rank' | 'community_score' | 'name'
+type SortKey = 'ppo_rank' | 'ppo_winrate' | 'ppo_games' | 'faction_elo' | 'cyrac_rank'
 
 export default function Meta() {
   const [data, setData]               = useState<MetaEntry[]>([])
   const [loading, setLoading]         = useState(true)
-  const [sortBy, setSortBy]           = useState<SortKey>('cyrac_rank')
+  const [sortBy, setSortBy]           = useState<SortKey>('ppo_rank')
   const [filterSize, setFilterSize]   = useState<string[]>([])
   const [filterPlay, setFilterPlay]   = useState<string[]>([])
   const [search, setSearch]           = useState('')
@@ -79,9 +79,11 @@ export default function Meta() {
     if (filterSize.length) d = d.filter(r => r.size && filterSize.includes(r.size))
     if (filterPlay.length) d = d.filter(r => r.play && filterPlay.includes(r.play))
     d.sort((a, b) => {
-      if (sortBy === 'cyrac_rank')      return (a.cyrac_rank ?? 999) - (b.cyrac_rank ?? 999)
-      if (sortBy === 'community_score') return (b.community_score ?? 0) - (a.community_score ?? 0)
-      if (sortBy === 'ppo_rank')        return (a.ppo_rank ?? 999) - (b.ppo_rank ?? 999)
+      if (sortBy === 'ppo_rank')    return (a.ppo_rank ?? 999) - (b.ppo_rank ?? 999)
+      if (sortBy === 'ppo_winrate') return (b.ppo_winrate ?? 0) - (a.ppo_winrate ?? 0)
+      if (sortBy === 'ppo_games')   return (b.ppo_games ?? 0) - (a.ppo_games ?? 0)
+      if (sortBy === 'faction_elo') return ((b as MetaEntry).faction_elo ?? 0) - ((a as MetaEntry).faction_elo ?? 0)
+      if (sortBy === 'cyrac_rank')  return (a.cyrac_rank ?? 999) - (b.cyrac_rank ?? 999)
       return a.name.localeCompare(b.name)
     })
     return d
@@ -95,39 +97,22 @@ export default function Meta() {
       <p style={{ color: '#64748b', marginBottom: 24, fontSize: 14 }}>
         CYRAC expert tier list · Community votes · Team characteristics
       </p>
-      <div style={{ marginBottom: 24, padding: '16px 20px', background: '#111827', borderRadius: 8, border: '1px solid #1e2130' }}>
-  <h3 style={{ fontSize: 13, fontWeight: 600, color: '#475569', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Acknowledgements</h3>
-  <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.8 }}>
-    📊 Tournament win rate data provided by{' '}
-    <a href="https://www.pretentiousplasticops.com" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', textDecoration: 'underline' }}>
-      Pretentious Plastic Ops
-    </a>
-    {' '}— sourced from Best Coast Pairings & Tabletop Herald.
-  </p>
-  <p style={{ fontSize: 13, color: '#64748b', marginTop: 6, lineHeight: 1.8 }}>
-    🎖️ Expert tier rankings provided by{' '}
-    <a href="https://www.canyourollacrit.com" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', textDecoration: 'underline' }}>
-      Can You Roll a Crit
-    </a>
-    {' '}(CYRAC).
-  </p>
-  <p style={{ fontSize: 13, color: '#64748b', marginTop: 6, lineHeight: 1.8 }}>
-    🙏 Special thanks to <strong style={{ color: '#94a3b8' }}>Parth K</strong> for their support and contributions to this project.
-  </p>
-</div>
 
+      {/* Controls */}
       <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
         <input placeholder="Search team..." value={search} onChange={e => setSearch(e.target.value)} style={inputStyle} />
         <select value={sortBy} onChange={e => setSortBy(e.target.value as SortKey)} style={inputStyle}>
-          <option value="cyrac_rank">Sort: CYRAC Rank</option>
-          <option value="community_score">Sort: Community Score</option>
           <option value="ppo_rank">Sort: PPO Tier</option>
-          <option value="name">Sort: Name</option>
+          <option value="ppo_winrate">Sort: Win Rate</option>
+          <option value="ppo_games">Sort: Games Played</option>
+          <option value="faction_elo">Sort: Faction ELO</option>
+          <option value="cyrac_rank">Sort: CYRAC Rank</option>
         </select>
         <MultiFilter label="Size" options={['Horde','Midrange','Elite','Hyper-elite','Mixed']} value={filterSize} onChange={setFilterSize} />
         <MultiFilter label="Play" options={['Ranged','Melee','Assault','Mixed','Variable']} value={filterPlay} onChange={setFilterPlay} />
       </div>
 
+      {/* Table */}
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
@@ -175,8 +160,28 @@ export default function Meta() {
           </tbody>
         </table>
       </div>
-            
 
+      {/* Acknowledgements */}
+      <div style={{ marginTop: 48, borderTop: '1px solid #1e2130', paddingTop: 24 }}>
+        <h3 style={{ fontSize: 13, fontWeight: 600, color: '#475569', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Acknowledgements</h3>
+        <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.8 }}>
+          📊 Tournament win rate data provided by{' '}
+          <a href="https://www.pretentiousplasticops.com" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', textDecoration: 'underline' }}>
+            Pretentious Plastic Ops
+          </a>
+          {' '}— sourced from Best Coast Pairings & Tabletop Herald.
+        </p>
+        <p style={{ fontSize: 13, color: '#64748b', marginTop: 6, lineHeight: 1.8 }}>
+          🎖️ Expert tier rankings provided by{' '}
+          <a href="https://www.canyourollacrit.com" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', textDecoration: 'underline' }}>
+            Can You Roll a Crit
+          </a>
+          {' '}(CYRAC).
+        </p>
+        <p style={{ fontSize: 13, color: '#64748b', marginTop: 6, lineHeight: 1.8 }}>
+          🙏 Special thanks to <strong style={{ color: '#94a3b8' }}>Parth K</strong> for their support and contributions to this project.
+        </p>
+      </div>
     </div>
   )
 }
