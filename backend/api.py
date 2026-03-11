@@ -5,8 +5,9 @@ Single endpoint: GET https://ktdash.app/api/killteams?full=Y
 
 import json
 import os
+import time
 import requests
-import streamlit as st
+
 
 BASE_URL = "https://ktdash.app/api"
 HEADERS  = {"Accept": "application/json"}
@@ -40,9 +41,15 @@ def _raw_fetch() -> list[dict]:
     return resp.json()
 
 
-@st.cache_data(ttl=300, show_spinner="Loading kill teams from ktdash.app…")
+_cache: list[dict] | None = None
+_cache_time: float = 0
+
 def fetch_all_killteams() -> list[dict]:
-    return _raw_fetch()
+    global _cache, _cache_time
+    if _cache is None or (time.monotonic() - _cache_time) > 300:
+        _cache = _raw_fetch()
+        _cache_time = time.monotonic()
+    return _cache
 
 
 def fetch_killteam_names() -> list[str]:
