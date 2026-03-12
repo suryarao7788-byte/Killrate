@@ -117,19 +117,16 @@ export default function Meta() {
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead>
             <tr style={{ borderBottom: '1px solid #2d3748', color: '#64748b' }}>
-              {['#','Kill Team','CYRAC','PPO Tier','PPO Win%','PPO Placing%','PPO Games','Faction ELO','Community','Votes','Size','Play Style','Tricksy'].map(h => (
+              {['#','Kill Team','PPO Tier','PPO Win%','Faction ELO','PPO Games','PPO Placing%','CYRAC','Community','Votes','Size','Play Style','Tricksy'].map(h => (
                 <th key={h} style={{ padding: '8px 12px', textAlign: 'left', fontWeight: 600 }}>{h}</th>
               ))}
             </tr>
           </thead>
-          <tbody>
+     <tbody>
             {filtered.map((row, i) => (
               <tr key={row.name} style={{ borderBottom: '1px solid #1e2130', background: i % 2 === 0 ? 'transparent' : '#ffffff04' }}>
                 <td style={{ padding: '10px 12px', color: '#475569' }}>{i + 1}</td>
                 <td style={{ padding: '10px 12px', fontWeight: 600 }}>{row.name}</td>
-                <td style={{ padding: '10px 12px' }}>
-                  {row.cyrac_rank ? <Badge label={`#${row.cyrac_rank} ${row.cyrac_tier}`} color={TIER_COLORS[row.cyrac_tier] ?? '#888'} /> : '—'}
-                </td>
                 <td style={{ padding: '10px 12px', textAlign: 'center' }}>
                   {row.ppo_tier ? <Badge label={`#${row.ppo_rank} ${row.ppo_tier}`} color={TIER_COLORS[row.ppo_tier] ?? '#888'} /> : <span style={{ color: '#666' }}>—</span>}
                 </td>
@@ -138,15 +135,18 @@ export default function Meta() {
                     ? <span style={{ fontWeight: 700, color: row.ppo_winrate >= 55 ? '#4ade80' : row.ppo_winrate >= 45 ? '#facc15' : '#f87171' }}>{row.ppo_winrate}%</span>
                     : <span style={{ color: '#666' }}>—</span>}
                 </td>
-                <td style={{ padding: '10px 12px', textAlign: 'center' }}>
-                  {row.ppo_placing_rate != null ? <span style={{ fontWeight: 600, color: '#94a3b8' }}>{row.ppo_placing_rate}%</span> : <span style={{ color: '#666' }}>—</span>}
+                <td style={{ padding: '10px 12px' }}>
+                  <span style={{ fontWeight: 700, color: '#f59e0b' }}>{(row as MetaEntry).faction_elo?.toFixed(0) ?? '—'}</span>
+                  {(row as MetaEntry).faction_elo_provisional && <span style={{ fontSize: 10, color: '#475569', marginLeft: 4 }}>P</span>}
                 </td>
                 <td style={{ padding: '10px 12px', textAlign: 'center', color: '#64748b', fontSize: 12 }}>
                   {row.ppo_games != null && row.ppo_picks != null ? `${row.ppo_picks}p / ${row.ppo_games}g` : '—'}
                 </td>
+                <td style={{ padding: '10px 12px', textAlign: 'center' }}>
+                  {row.ppo_placing_rate != null ? <span style={{ fontWeight: 600, color: '#94a3b8' }}>{row.ppo_placing_rate}%</span> : <span style={{ color: '#666' }}>—</span>}
+                </td>
                 <td style={{ padding: '10px 12px' }}>
-                  <span style={{ fontWeight: 700, color: '#f59e0b' }}>{(row as MetaEntry).faction_elo?.toFixed(0) ?? '—'}</span>
-                  {(row as MetaEntry).faction_elo_provisional && <span style={{ fontSize: 10, color: '#475569', marginLeft: 4 }}>P</span>}
+                  {row.cyrac_rank ? <Badge label={`#${row.cyrac_rank} ${row.cyrac_tier}`} color={TIER_COLORS[row.cyrac_tier] ?? '#888'} /> : '—'}
                 </td>
                 <td style={{ padding: '10px 12px', fontWeight: 700, color: scoreColor(row.community_score) }}>
                   {row.community_score ? row.community_score.toFixed(1) : '—'}
